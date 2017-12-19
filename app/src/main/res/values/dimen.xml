@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin10">10dp</dimen>
+    <dimen name="margin50">50dp</dimen>
+    <dimen name="margin20">20dp</dimen>
+
+    <dimen name="dimen20">20sp</dimen>
+    <dimen name="dimen18">18sp</dimen>
+</resources>

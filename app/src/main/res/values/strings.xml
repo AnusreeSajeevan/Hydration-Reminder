@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">HydrationRemainder</string>
+
+    <string name="label1">Press the glass of water after you have hydrated</string>
+
+    <plurals name="charging_remainder_count">
+        <item quantity="one">Hydration while charging remainder sent %d time</item>
+        <item quantity="zero">Hydration while charging remainder sent %d times</item>
+        <item quantity="other">Hydration while charging remainder sent %d times</item>
+    </plurals>
+
+    <string name="default_charging_remainder_count">Hydration while charging remainder sent 0 times</string>
+
 </resources>
