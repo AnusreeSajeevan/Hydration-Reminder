@@ -7,21 +7,19 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anu.hydrationremainder.services.HydrationRemainderIntentService;
 import com.example.anu.hydrationremainder.services.RemainderTasks;
+import com.example.anu.hydrationremainder.utils.HydrationNotificationUtils;
 import com.example.anu.hydrationremainder.utils.PreferenceUtilities;
-
-import java.util.prefs.PreferenceChangeListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @BindView(R.id.txt_label)
     TextView txtLabel;
@@ -68,19 +66,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
      */
     @OnClick(R.id.imgbtn)
     public void onViewClicked() {
-        Toast.makeText(this, "hai", Toast.LENGTH_SHORT).show();
-
         /**
          * call the intent service by passing{@link RemainderTasks.ACTION_INCREMENT_WATER_COUNT}
          * as the action
          */
-        Intent intent =  new Intent(this, HydrationRemainderIntentService.class);
+        Intent intent = new Intent(this, HydrationRemainderIntentService.class);
         intent.setAction(RemainderTasks.ACTION_INCREMENT_WATER_COUNT);
         startService(intent);
     }
 
     /**
      * update either the water count or the remainder count based on the change in preference
+     *
      * @param sharedPreferences changed preference
      * @param key changed key
      */
@@ -102,5 +99,10 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
          */
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @OnClick(R.id.btn_test_notification)
+    public void onTestNotificationClicked() {
+        HydrationNotificationUtils.createHydrationReminderNotification(this);
     }
 }

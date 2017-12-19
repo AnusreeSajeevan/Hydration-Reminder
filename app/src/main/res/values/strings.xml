@@ -10,5 +10,9 @@
     </plurals>
 
     <string name="default_charging_remainder_count">Hydration while charging remainder sent 0 times</string>
+    <string name="test_notification">Test Notificaion</string>
+    <string name="reminder_notification_title">Device is charging!!!Where is that cup of water?</string>
+    <string name="reminder_notification_text">There is never a better time to drink water when you know your phone is charging...</string>
+    <string name="notification_channel_name">primary channel name</string>
 
 </resources>
