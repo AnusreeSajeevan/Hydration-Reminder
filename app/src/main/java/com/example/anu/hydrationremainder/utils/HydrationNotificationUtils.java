@@ -21,6 +21,8 @@ import android.support.v4.content.ContextCompat;
 
 import com.example.anu.hydrationremainder.MainActivity;
 import com.example.anu.hydrationremainder.R;
+import com.example.anu.hydrationremainder.services.HydrationRemainderIntentService;
+import com.example.anu.hydrationremainder.services.RemainderTasks;
 
 /**
  * utility class helps to create and maintain hydration reminder notifications
@@ -37,6 +39,16 @@ public class HydrationNotificationUtils {
      * id which uniquely identifis the notification channel which categorises notifications
      */
     private static final int NOTIFICATION_PENDING_INTENT_ID = 20;
+
+    /**
+     * id which uniquely identifis the drink water pending intent
+     */
+    private static final int NOTIFICATION_DRINK_WATER_PENDING_INTENT_ID = 30;
+
+    /**
+     * id which uniquely identifis cancel notifications pending intent
+     */
+    private static final int NOTIFICATION_CANCEL_PENDING_INTENT_ID = 40;
 
     /**
      * uniwue name for the notification channel
@@ -73,6 +85,8 @@ public class HydrationNotificationUtils {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(context.getResources().getString(R.string.reminder_notification_text)))
                 .setContentIntent(getPendingIntent(context))    //should redirect to {@link MainActivity}
                 .setDefaults(Notification.DEFAULT_VIBRATE)
+                .addAction(drinWaterAction(context))
+                .addAction(cancelAction(context))
                 .setAutoCancel(true);   //notification will be cancelled automatically when we click on it
 
         /**
@@ -91,6 +105,42 @@ public class HydrationNotificationUtils {
     }
 
     /**
+     * method to create action for drink water
+     * @param context called context
+     * @return created acton
+     */
+    private static NotificationCompat.Action drinWaterAction(Context context) {
+
+        Intent intentDrinkWater = new Intent(context, HydrationRemainderIntentService.class);
+        intentDrinkWater.setAction(RemainderTasks.ACTION_INCREMENT_WATER_COUNT);
+
+        PendingIntent pendingIntentDrinkWater = PendingIntent.getService(context,
+                NOTIFICATION_DRINK_WATER_PENDING_INTENT_ID, intentDrinkWater, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Action drinkWaterAction = new NotificationCompat.Action(R.drawable.ic_glass_water_small,
+                context.getResources().getString(R.string.action_i_did_it), pendingIntentDrinkWater);
+        return drinkWaterAction;
+    }
+
+/**
+     * method to create action for drink water
+     * @param context called context
+     * @return created acton
+     */
+    private static NotificationCompat.Action cancelAction(Context context) {
+
+        Intent intentCancel = new Intent(context, HydrationRemainderIntentService.class);
+        intentCancel.setAction(RemainderTasks.ACTION_CANCEL_NOTIFICATION);
+
+        PendingIntent pendingIntentCancel = PendingIntent.getService(context,
+                NOTIFICATION_CANCEL_PENDING_INTENT_ID, intentCancel, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Action cancelAction = new NotificationCompat.Action(R.drawable.ic_cancel,
+                context.getResources().getString(R.string.action_no_thanks), pendingIntentCancel);
+        return cancelAction;
+    }
+
+    /**
      * method to create PendingIntent to redirect to {@link MainActivity}
      * on clicking notification
      * @param context called context
@@ -103,5 +153,15 @@ public class HydrationNotificationUtils {
 
     private static Bitmap getLargeIcon(Context context){
         return BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_glass_water);
+    }
+
+    /**
+     * method to cancel all the notifications
+     * @param context
+     */
+    public static void clearNotifications(Context context){
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
     }
 }

@@ -67,5 +67,6 @@ public class PreferenceUtilities {
         int waterCount = preferences.getInt(KEY_WATER_COUNT, DEFAULT_COUNT);
         waterCount = waterCount + 1;
         setWaterCount(context, waterCount);
+
     }
 }

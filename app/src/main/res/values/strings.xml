@@ -15,4 +15,7 @@
     <string name="reminder_notification_text">There is never a better time to drink water when you know your phone is charging...</string>
     <string name="notification_channel_name">primary channel name</string>
 
+    <string name="action_i_did_it">I Did It</string>
+    <string name="action_no_thanks">No Thanks</string>
+
 </resources>

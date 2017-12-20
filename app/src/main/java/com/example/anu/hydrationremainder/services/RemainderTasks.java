@@ -3,6 +3,7 @@ package com.example.anu.hydrationremainder.services;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.anu.hydrationremainder.utils.HydrationNotificationUtils;
 import com.example.anu.hydrationremainder.utils.PreferenceUtilities;
 
 /**
@@ -18,6 +19,11 @@ public class RemainderTasks {
      */
     public static final String ACTION_INCREMENT_WATER_COUNT = "increment_water_count";
 
+    /**
+     * action to cancel notifications
+     */
+    public static final String ACTION_CANCEL_NOTIFICATION = "cancel_notification";
+
     /*method to increment the water count
      *
      * @param context called context
@@ -25,7 +31,11 @@ public class RemainderTasks {
      */
     public static void execute(Context context, String action){
         Log.d(TAG, "execute");
-        if (action.equalsIgnoreCase(ACTION_INCREMENT_WATER_COUNT))
+        if (action.equalsIgnoreCase(ACTION_INCREMENT_WATER_COUNT)) {
             PreferenceUtilities.incrementWaterCount(context);
+            HydrationNotificationUtils.clearNotifications(context);
+        }
+        else if (action.equalsIgnoreCase(ACTION_CANCEL_NOTIFICATION))
+            HydrationNotificationUtils.clearNotifications(context);
     }
 }
