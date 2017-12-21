@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ReminderUtilities {
 
-    private static final int CHARGING_REMINDER_IN_MINUTES = 1;
+    private static final int CHARGING_REMINDER_IN_MINUTES = 60;
 
     public static boolean isInitialized = false;
 

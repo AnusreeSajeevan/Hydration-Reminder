@@ -1,13 +1,18 @@
 package com.example.anu.hydrationremainder;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.anu.hydrationremainder.services.HydrationReminderIntentService;
 import com.example.anu.hydrationremainder.services.ReminderTasks;
@@ -30,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     TextView txtChargingRemainderCount;
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    @BindView(R.id.img_charging)
+    ImageView imgCharging;
+
+    private IntentFilter mIntentFilter;
+    private ChargingBroadcastReceiver mChargingBroadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +48,19 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         ButterKnife.bind(this);
         populateWaterCount();
         populateChargingRemainderCount();
+
+        /**
+         * initialize {@link mIntentFilter} and {@link mChargingBroadcastReceiver}
+         */
+        mIntentFilter = new IntentFilter();
+        mChargingBroadcastReceiver = new ChargingBroadcastReceiver();
+
+        /**
+         * add power connected and disconnected actions to the IIntentFilter
+         */
+        mIntentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
+        mIntentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+
 
         /**
          * schedule the job to remind
@@ -84,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
      * update either the water count or the reminder count based on the change in preference
      *
      * @param sharedPreferences changed preference
-     * @param key changed key
+     * @param key               changed key
      */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -104,5 +127,58 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
          */
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    /**
+     * method responsible for changing the charging icon
+     * depending on the value of isCharging
+     * will show black color charging is charging is disconnected and showsgreen color charging when device is in charging
+     *
+     * @param isCharging true if device i charging, false otherwise
+     */
+    private void chageChrgingImage(boolean isCharging) {
+        if (isCharging) {
+            imgCharging.setImageResource(R.drawable.ic_charger_green);
+        } else {
+            imgCharging.setImageResource(R.drawable.ic_charger);
+        }
+    }
+
+    /**
+     * inner class extends from {@link BroadcastReceiver}
+     */
+    private class ChargingBroadcastReceiver extends BroadcastReceiver {
+
+        /**
+         * override this method to receive action from the intent to match with ACTION_POWER_CONNECTED
+         * if it matchs, power is connected
+         *
+         * @param context
+         * @param intent
+         */
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            boolean isCharging = action.equals(Intent.ACTION_POWER_CONNECTED);
+            chageChrgingImage(isCharging);
+        }
+    }
+
+    /**
+     * register {@link ChargingBroadcastReceiver} to receive action when power is connected or disconnected
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(mChargingBroadcastReceiver, mIntentFilter);
+    }
+
+    /**
+     * clean up the broadcast receiver
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mChargingBroadcastReceiver);
     }
 }
