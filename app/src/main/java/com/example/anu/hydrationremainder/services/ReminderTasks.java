@@ -25,7 +25,7 @@ public class ReminderTasks {
     public static final String ACTION_CANCEL_NOTIFICATION = "cancel_notification";
 
     /**
-     * task for issueing carging remainder notification
+     * task for issueing carging reminder notification
      */
     public static final String ACTION_CHARGING_REMAINDER_NOTIFICATION = "charging_remainder_notification";
 

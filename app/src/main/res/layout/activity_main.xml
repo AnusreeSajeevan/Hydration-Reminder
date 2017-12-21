@@ -54,13 +54,4 @@
         android:drawableLeft="@drawable/ic_charger"
         android:gravity="center"
         android:text="@string/default_charging_remainder_count"/>
-
-    <Button
-        android:layout_marginBottom="@dimen/margin10"
-        android:id="@+id/btn_test_notification"
-        android:text="@string/test_notification"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </RelativeLayout>

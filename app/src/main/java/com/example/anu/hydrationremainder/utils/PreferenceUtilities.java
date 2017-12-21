@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
- * class used to maintain water count and charging remainder count in shared prefrence
+ * class used to maintain water count and charging reminder count in shared prefrence
  */
 public class PreferenceUtilities {
 
@@ -24,7 +24,7 @@ public class PreferenceUtilities {
     /**
      * preference key to store charging remiander count
      */
-    public static final String KEY_CHARGING_REMAINDER_COUNT = "charging remainder_count";
+    public static final String KEY_CHARGING_REMINDER_COUNT = "charging reminder_count";
 
     private static final int DEFAULT_COUNT = 0;
 
@@ -45,7 +45,7 @@ public class PreferenceUtilities {
      */
     public static int getChargingRemainderCount(Context context){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getInt(KEY_CHARGING_REMAINDER_COUNT, DEFAULT_COUNT);
+        return preferences.getInt(KEY_CHARGING_REMINDER_COUNT, DEFAULT_COUNT);
     }
 
     /**
@@ -72,7 +72,7 @@ public class PreferenceUtilities {
         Log.d(TAG, "count : " + count);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(KEY_CHARGING_REMAINDER_COUNT, count);
+        editor.putInt(KEY_CHARGING_REMINDER_COUNT, count);
         editor.apply();
     }
 
@@ -94,7 +94,7 @@ public class PreferenceUtilities {
      */
     public static void incrementChargingRemindercount(Context context){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        int chargingRemindercount = preferences.getInt(KEY_CHARGING_REMAINDER_COUNT, DEFAULT_COUNT);
+        int chargingRemindercount = preferences.getInt(KEY_CHARGING_REMINDER_COUNT, DEFAULT_COUNT);
         chargingRemindercount = chargingRemindercount + 1;
         setChargingReminderCount(context, chargingRemindercount);
 

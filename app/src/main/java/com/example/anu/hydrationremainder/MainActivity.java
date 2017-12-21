@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.example.anu.hydrationremainder.services.HydrationReminderIntentService;
 import com.example.anu.hydrationremainder.services.ReminderTasks;
-import com.example.anu.hydrationremainder.utils.HydrationNotificationUtils;
 import com.example.anu.hydrationremainder.utils.PreferenceUtilities;
+import com.example.anu.hydrationremainder.utils.ReminderUtilities;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +37,12 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         populateWaterCount();
+        populateChargingRemainderCount();
+
+        /**
+         * schedule the job to remind
+         */
+        ReminderUtilities.scheduleChargingReminder(this);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.registerOnSharedPreferenceChangeListener(this);
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     /**
-     * method to update current charging remainder count
+     * method to update current charging reminder count
      */
     private void populateChargingRemainderCount() {
         int chargingRemainderCount = PreferenceUtilities.getChargingRemainderCount(this);
@@ -75,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     /**
-     * update either the water count or the remainder count based on the change in preference
+     * update either the water count or the reminder count based on the change in preference
      *
      * @param sharedPreferences changed preference
      * @param key changed key
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equalsIgnoreCase(PreferenceUtilities.KEY_WATER_COUNT))
             populateWaterCount();
-        else if (key.equalsIgnoreCase(PreferenceUtilities.KEY_CHARGING_REMAINDER_COUNT))
+        else if (key.equalsIgnoreCase(PreferenceUtilities.KEY_CHARGING_REMINDER_COUNT))
             populateChargingRemainderCount();
 
     }
@@ -98,10 +104,5 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
          */
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @OnClick(R.id.btn_test_notification)
-    public void onTestNotificationClicked() {
-        HydrationNotificationUtils.createHydrationReminderNotification(this);
     }
 }
