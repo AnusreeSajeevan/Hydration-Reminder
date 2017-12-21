@@ -12,17 +12,17 @@ import android.util.Log;
 /**
  * service to increment water count
  */
-public class HydrationRemainderIntentService extends IntentService {
+public class HydrationReminderIntentService extends IntentService {
 
-    private static final String TAG = HydrationRemainderIntentService.class.getSimpleName();
+    private static final String TAG = HydrationReminderIntentService.class.getSimpleName();
 
-    public HydrationRemainderIntentService() {
-        super("HydrationRemainderIntentService");
+    public HydrationReminderIntentService() {
+        super("HydrationReminderIntentService");
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Log.d(TAG, "onHandleIntent");
-        RemainderTasks.execute(this, intent.getAction());
+        ReminderTasks.execute(this, intent.getAction());
     }
 }

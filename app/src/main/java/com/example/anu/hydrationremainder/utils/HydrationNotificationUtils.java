@@ -12,17 +12,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
-import android.os.Vibrator;
-import android.renderscript.RenderScript;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
 import com.example.anu.hydrationremainder.MainActivity;
 import com.example.anu.hydrationremainder.R;
-import com.example.anu.hydrationremainder.services.HydrationRemainderIntentService;
-import com.example.anu.hydrationremainder.services.RemainderTasks;
+import com.example.anu.hydrationremainder.services.HydrationReminderIntentService;
+import com.example.anu.hydrationremainder.services.ReminderTasks;
 
 /**
  * utility class helps to create and maintain hydration reminder notifications
@@ -111,8 +108,8 @@ public class HydrationNotificationUtils {
      */
     private static NotificationCompat.Action drinWaterAction(Context context) {
 
-        Intent intentDrinkWater = new Intent(context, HydrationRemainderIntentService.class);
-        intentDrinkWater.setAction(RemainderTasks.ACTION_INCREMENT_WATER_COUNT);
+        Intent intentDrinkWater = new Intent(context, HydrationReminderIntentService.class);
+        intentDrinkWater.setAction(ReminderTasks.ACTION_INCREMENT_WATER_COUNT);
 
         PendingIntent pendingIntentDrinkWater = PendingIntent.getService(context,
                 NOTIFICATION_DRINK_WATER_PENDING_INTENT_ID, intentDrinkWater, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -129,8 +126,8 @@ public class HydrationNotificationUtils {
      */
     private static NotificationCompat.Action cancelAction(Context context) {
 
-        Intent intentCancel = new Intent(context, HydrationRemainderIntentService.class);
-        intentCancel.setAction(RemainderTasks.ACTION_CANCEL_NOTIFICATION);
+        Intent intentCancel = new Intent(context, HydrationReminderIntentService.class);
+        intentCancel.setAction(ReminderTasks.ACTION_CANCEL_NOTIFICATION);
 
         PendingIntent pendingIntentCancel = PendingIntent.getService(context,
                 NOTIFICATION_CANCEL_PENDING_INTENT_ID, intentCancel, PendingIntent.FLAG_UPDATE_CURRENT);

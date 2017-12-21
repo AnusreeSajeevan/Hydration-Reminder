@@ -62,11 +62,41 @@ public class PreferenceUtilities {
         editor.apply();
     }
 
+    /**
+     * method to set charging reminder count
+     * @param context aclled context
+     * @param count updated charging reminder count
+     */
+    public static void setChargingReminderCount(Context context, int count){
+        Log.d(TAG, "setWaterCount");
+        Log.d(TAG, "count : " + count);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(KEY_CHARGING_REMAINDER_COUNT, count);
+        editor.apply();
+    }
+
+    /**
+     * method to increment water count
+     * @param context called context
+     */
     public static void incrementWaterCount(Context context){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         int waterCount = preferences.getInt(KEY_WATER_COUNT, DEFAULT_COUNT);
         waterCount = waterCount + 1;
         setWaterCount(context, waterCount);
+
+    }
+
+    /**
+     * method to increment water count
+     * @param context called context
+     */
+    public static void incrementChargingRemindercount(Context context){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        int chargingRemindercount = preferences.getInt(KEY_CHARGING_REMAINDER_COUNT, DEFAULT_COUNT);
+        chargingRemindercount = chargingRemindercount + 1;
+        setChargingReminderCount(context, chargingRemindercount);
 
     }
 }

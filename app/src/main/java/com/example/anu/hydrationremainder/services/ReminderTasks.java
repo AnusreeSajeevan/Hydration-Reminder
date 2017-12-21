@@ -10,9 +10,9 @@ import com.example.anu.hydrationremainder.utils.PreferenceUtilities;
  * Created by Design on 19-12-2017.
  */
 
-public class RemainderTasks {
+public class ReminderTasks {
 
-    private static final String TAG = RemainderTasks.class.getSimpleName();
+    private static final String TAG = ReminderTasks.class.getSimpleName();
 
     /**
      * action to increment the water count
@@ -23,6 +23,11 @@ public class RemainderTasks {
      * action to cancel notifications
      */
     public static final String ACTION_CANCEL_NOTIFICATION = "cancel_notification";
+
+    /**
+     * task for issueing carging remainder notification
+     */
+    public static final String ACTION_CHARGING_REMAINDER_NOTIFICATION = "charging_remainder_notification";
 
     /*method to increment the water count
      *
@@ -37,5 +42,9 @@ public class RemainderTasks {
         }
         else if (action.equalsIgnoreCase(ACTION_CANCEL_NOTIFICATION))
             HydrationNotificationUtils.clearNotifications(context);
+        else if (action.equalsIgnoreCase(ACTION_CHARGING_REMAINDER_NOTIFICATION)){
+            PreferenceUtilities.incrementChargingRemindercount(context);
+            HydrationNotificationUtils.createHydrationReminderNotification(context);
+        }
     }
 }

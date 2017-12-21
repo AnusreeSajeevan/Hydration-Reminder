@@ -8,10 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.anu.hydrationremainder.services.HydrationRemainderIntentService;
-import com.example.anu.hydrationremainder.services.RemainderTasks;
+import com.example.anu.hydrationremainder.services.HydrationReminderIntentService;
+import com.example.anu.hydrationremainder.services.ReminderTasks;
 import com.example.anu.hydrationremainder.utils.HydrationNotificationUtils;
 import com.example.anu.hydrationremainder.utils.PreferenceUtilities;
 
@@ -67,11 +66,11 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     @OnClick(R.id.imgbtn)
     public void onViewClicked() {
         /**
-         * call the intent service by passing{@link RemainderTasks.ACTION_INCREMENT_WATER_COUNT}
+         * call the intent service by passing{@link ReminderTasks.ACTION_INCREMENT_WATER_COUNT}
          * as the action
          */
-        Intent intent = new Intent(this, HydrationRemainderIntentService.class);
-        intent.setAction(RemainderTasks.ACTION_INCREMENT_WATER_COUNT);
+        Intent intent = new Intent(this, HydrationReminderIntentService.class);
+        intent.setAction(ReminderTasks.ACTION_INCREMENT_WATER_COUNT);
         startService(intent);
     }
 

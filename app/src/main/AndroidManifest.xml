@@ -21,8 +21,19 @@
         </activity>
 
         <!-- Register service -->
-        <service android:name=".services.HydrationRemainderIntentService"
+        <service android:name=".services.HydrationReminderIntentService"
             android:exported="false"/>
+
+        <!--Add the WaterReminderFirebaseJobService here. It should not be exported and it
+        should have an intent filter for the action com.firebase.jobdispatcher.ACTION_EXECUTE -->
+        <!-- This is the Service declaration used in conjunction with FirebaseJobDispatcher -->
+        <service android:name=".services.WaterReminderFirebaseJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
